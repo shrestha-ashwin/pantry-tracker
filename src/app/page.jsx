@@ -76,12 +76,8 @@ export default function Home() {
     updateQuantity(id, newQuantity);
   };
 
-  const getRef = () => {
-    console.dir(itemField.current);
-  };
-
   return (
-    <div className="max-w-5xl mx-auto box-border mt-4">
+    <div className="max-w-5xl mx-auto box-border mt-24">
       <h1 className="text-center text-2xl mb-6">Pantry Tracker</h1>
       <div className="grid justify-items-center mb-16 gap-y-1">
         <input
@@ -120,7 +116,6 @@ export default function Home() {
         >
           Add item
         </button>
-        <button onClick={getRef}>GET REF</button>
       </div>
       <div>
         <h2 className="text-center mb-4 text-xl font-semibold">Items: </h2>
