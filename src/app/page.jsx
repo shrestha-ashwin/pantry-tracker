@@ -15,9 +15,9 @@ export default function Home() {
   const [newItemName, setNewItemName] = useState("");
   const [newItemPrice, setNewItemPrice] = useState(0);
   const [newItemQuantity, setNewItemQuantity] = useState(0);
-  const itemField = document.querySelector(".item");
-  const priceField = document.querySelector(".price");
-  const quantityField = document.querySelector(".quantity");
+  const itemField = useRef(null);
+  const priceField = useRef(null);
+  const quantityField = useRef(null);
 
   const itemsCollection = collection(db, "items");
 
@@ -45,9 +45,9 @@ export default function Home() {
         price: newItemPrice,
         quantity: newItemQuantity,
       });
-      itemField.value = "";
-      priceField.value = "";
-      quantityField.value = "";
+      itemField.current.value = "";
+      priceField.current.value = "";
+      quantityField.current.value = "";
       getItems();
     } catch (err) {
       console.error(err);
@@ -76,6 +76,10 @@ export default function Home() {
     updateQuantity(id, newQuantity);
   };
 
+  const getRef = () => {
+    console.dir(itemField.current);
+  };
+
   return (
     <div className="max-w-5xl mx-auto box-border mt-4">
       <h1 className="text-center text-2xl mb-6">Pantry Tracker</h1>
@@ -84,27 +88,28 @@ export default function Home() {
           type="text"
           placeholder="item"
           onChange={(e) => setNewItemName(e.target.value)}
-          className="item px-1 py-2 ml-6"
+          className="px-1 py-2 ml-6"
+          ref={itemField}
         />
 
         <div className="flex gap-3 items-center">
-          <label for="price">$</label>
+          <label>$</label>
           <input
             type="number"
             placeholder="price"
             id="price"
+            ref={priceField}
             onChange={(e) => setNewItemPrice(Number(e.target.value))}
-            className="price px-1 py-2"
+            className="px-1 py-2"
           />
         </div>
         <div className="flex gap-1 items-center">
-          <label className="h-10" for="quantity">
-            No.
-          </label>
+          <label className="h-10">No.</label>
           <input
             id="quantity"
             type="number"
             placeholder="quantity"
+            ref={quantityField}
             onChange={(e) => setNewItemQuantity(Number(e.target.value))}
             className="quantity mb-4 px-1 py-2"
           />
@@ -115,6 +120,7 @@ export default function Home() {
         >
           Add item
         </button>
+        <button onClick={getRef}>GET REF</button>
       </div>
       <div>
         <h2 className="text-center mb-4 text-xl font-semibold">Items: </h2>
